@@ -5,5 +5,7 @@ export const SetUserId = (filedName = 'userId') => async (context: HookContext) 
 
   const user = params.user;
 
-  context.data[filedName] = user?._id;
+  context.data[filedName] = user?.id;
+  
+  return context;
 };

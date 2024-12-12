@@ -1,11 +1,11 @@
 // See https://vincit.github.io/objection.js/#models
 // for more of what you can do here.
-import { Model, JSONSchema } from 'objection';
+import Objection, { Model, JSONSchema } from 'objection';
 import Knex, { Knex as KnexType } from 'knex';
 import { Application } from '../../../declarations';
 import { UserRole, UserStatus } from './interfaces/UserInterface';
 
-class User extends Model {
+export class User extends Model {
   createdAt!: Date;
   updatedAt!: Date;
 
@@ -19,10 +19,11 @@ class User extends Model {
       required: ['password'],
 
       properties: {
-
+        name: { type: 'string' },
         email: { type: ['string', 'null'] },
         password: { type: 'string' },
-
+        role: { type: 'string', enum: [UserRole.MENTEE, UserRole.MENTOR] },
+        status: { type: 'number', enum: [UserStatus.ACTIVE, UserStatus.INACTIVE, UserStatus.DELETED] },
       }
     };
   }
@@ -34,6 +35,19 @@ class User extends Model {
   $beforeUpdate(): void {
     this.updatedAt = new Date();
   }
+
+  $formatDatabaseJson(json: Objection.Pojo): Objection.Pojo {
+    const finalObject: Objection.Pojo = {};
+    if (User.jsonSchema.properties) {
+      [...Object.keys(User.jsonSchema.properties), 'createdAt', 'updatedAt'].forEach((e) => {
+        if (typeof json[e] !== 'undefined') {
+          finalObject[e] = json[e];
+        }
+      });
+    }
+    return super.$formatDatabaseJson(finalObject);
+  }
+
 }
 
 export default function (app: Application): typeof User {
@@ -49,10 +63,10 @@ export default function (app: Application): typeof User {
         table.string('password');
 
         table.enum('role', [UserRole.MENTEE, UserRole.MENTOR]).defaultTo(UserRole.MENTEE);
-        table.enum('status', [UserStatus.ACTIVE, UserStatus.INACTIVE, UserStatus.DELETED]).defaultTo(UserStatus.ACTIVE);
+        table.integer('status').defaultTo(UserStatus.ACTIVE);
 
-        table.timestamp('createdAt');
-        table.timestamp('updatedAt');
+        table.timestamp('createdAt', { useTz: true }).defaultTo(db.fn.now());
+        table.timestamp('updatedAt', { useTz: true }).defaultTo(db.fn.now());
       })
         .then(() => console.log('Created user table')) // eslint-disable-line no-console
         .catch(e => console.error('Error creating user table', e)); // eslint-disable-line no-console
@@ -60,7 +74,7 @@ export default function (app: Application): typeof User {
     // else {
     //   db.schema
     //     .alterTable('user', (table) => {
-    //       table.string('name');
+    //       table.integer('status').defaultTo(UserStatus.ACTIVE).alter();
     //     })
     //     .then(() => console.log('Altered user table')) // eslint-disable-line no-console
     //     .catch((e) => console.error('Error creating user table', e));
