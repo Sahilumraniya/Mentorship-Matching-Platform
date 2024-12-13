@@ -5,6 +5,7 @@ export const GetAllRequest = () => async (context: HookContext) => {
     const { user } = params;
 
     params.query = {
+        ...params.query,
         $or: [
             {
                 sender_id: user?.id
@@ -14,4 +15,6 @@ export const GetAllRequest = () => async (context: HookContext) => {
             }
         ]
     }
+
+    // console.log("Params ::", params.query);
 }

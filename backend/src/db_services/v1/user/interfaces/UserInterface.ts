@@ -10,9 +10,10 @@ export enum UserRole {
 }
 
 export interface User_GET {
-    _id: string;
+    id: string;
     name: string;
     email: string;
+    profile_id: number;
     role: UserRole;
     status: UserStatus;
     createdAt: Date;
@@ -30,6 +31,7 @@ export interface User_POST {
     name: string;
     email: string;
     password?: string;
+    profile_id?: number;
     role?: UserRole;
     status?: UserStatus;
 }
@@ -37,6 +39,7 @@ export interface User_POST {
 export interface User_PATCH {
     name?: string;
     email?: string;
+    profile_id?: number;
     password?: string;
     role?: UserRole;
     status?: UserStatus;
@@ -46,6 +49,7 @@ export interface User_QUERY {
     name?: string;
     email?: any;
     role?: any;
+    profile_id?: number;
     status?: any;
     createdAt?: any;
     updatedAt?: any;

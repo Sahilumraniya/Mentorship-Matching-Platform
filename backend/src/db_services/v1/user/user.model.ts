@@ -4,6 +4,7 @@ import Objection, { Model, JSONSchema } from 'objection';
 import Knex, { Knex as KnexType } from 'knex';
 import { Application } from '../../../declarations';
 import { UserRole, UserStatus } from './interfaces/UserInterface';
+import { Profile } from '../profile/profile.model';
 
 export class User extends Model {
   createdAt!: Date;
@@ -22,6 +23,7 @@ export class User extends Model {
         name: { type: 'string' },
         email: { type: ['string', 'null'] },
         password: { type: 'string' },
+        profile_id: { type: ['number', 'null'] },
         role: { type: 'string', enum: [UserRole.MENTEE, UserRole.MENTOR] },
         status: { type: 'number', enum: [UserStatus.ACTIVE, UserStatus.INACTIVE, UserStatus.DELETED] },
       }
@@ -48,6 +50,19 @@ export class User extends Model {
     return super.$formatDatabaseJson(finalObject);
   }
 
+  static get relationMappings() {
+    return {
+      profile: {
+        relation: Model.HasOneRelation,
+        modelClass: Profile,
+        join: {
+          from: 'user.profile_id',
+          to: 'profile.id',
+        },
+      },
+    };
+  }
+
 }
 
 export default function (app: Application): typeof User {
@@ -61,6 +76,7 @@ export default function (app: Application): typeof User {
         table.string('name');
         table.string('email').unique();
         table.string('password');
+        table.integer("profile_id").unsigned().references("id").inTable("profile");
 
         table.enum('role', [UserRole.MENTEE, UserRole.MENTOR]).defaultTo(UserRole.MENTEE);
         table.integer('status').defaultTo(UserStatus.ACTIVE);
@@ -74,7 +90,7 @@ export default function (app: Application): typeof User {
     // else {
     //   db.schema
     //     .alterTable('user', (table) => {
-    //       table.integer('status').defaultTo(UserStatus.ACTIVE).alter();
+    //       table.integer("profile_id").unsigned().references("id").inTable("profile");
     //     })
     //     .then(() => console.log('Altered user table')) // eslint-disable-line no-console
     //     .catch((e) => console.error('Error creating user table', e));

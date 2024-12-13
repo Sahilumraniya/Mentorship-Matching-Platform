@@ -6,7 +6,7 @@ import { Application } from '../../../declarations';
 import { ProfileStatus } from './interfaces/ProfileInterface';
 import { User } from '../user/user.model';
 
-class Profile extends Model {
+export class Profile extends Model {
   createdAt!: Date;
   updatedAt!: Date;
 
@@ -21,6 +21,7 @@ class Profile extends Model {
 
       properties: {
         user_id: { type: 'number' },
+        profile_picture: { type: ['string', 'null'] },
         bio: { type: 'string' },
         skills: {
           type: ['array', 'null'],
@@ -81,6 +82,7 @@ export default function (app: Application): typeof Profile {
       db.schema.createTable('profile', table => {
         table.increments('id');
         table.integer('user_id').unsigned().notNullable();
+        table.string('profile_picture');
         table.text('bio');
         table.json('skills');
         table.json('interests');
@@ -94,7 +96,7 @@ export default function (app: Application): typeof Profile {
     // else {
     //   db.schema
     //     .alterTable('profile', (table) => {
-    //       table.integer('status').defaultTo(ProfileStatus.ACTIVE).alter();
+    //       table.string('profile_picture');
     //     })
     //     .then(() => console.log('Altered profile table')) // eslint-disable-line no-console
     //     .catch((e) => console.error('Error creating profile table', e));

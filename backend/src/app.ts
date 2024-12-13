@@ -20,6 +20,7 @@ import { HookContext as FeathersHookContext } from '@feathersjs/feathers';
 import authentication from './authentication';
 import objection from './objection';
 import db_services from './db_services';
+import { S3Utilities } from './utils/S3Utilities';
 // Don't remove this comment. It's needed to format import lines nicely.
 
 const app: Application = express(feathers());
@@ -27,6 +28,16 @@ export type HookContext<T = any> = { app: Application } & FeathersHookContext<T>
 
 // Load app configuration
 app.configure(configuration());
+
+
+// set AWS configuration
+app.set('aws', {
+  accessKey: process.env.AWS_ACCESS_KEY_ID || '',
+  secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY || '',
+  region: process.env.AWS_REGION || 'ap-south-1'
+});
+app.set('aws_s3_backet', process.env.BUCKET_NAME)
+
 // Enable security, CORS, compression, favicon and body parsing
 app.use(helmet({
   contentSecurityPolicy: false
@@ -55,6 +66,9 @@ app.configure(db_services);
 app.configure(services);
 // Set up event channels (see channels.ts)
 app.configure(channels);
+
+// Initialize S3
+app.configure(S3Utilities.initializeS3);
 
 // Configure a middleware for 404s and the error handler
 app.use(express.notFound());

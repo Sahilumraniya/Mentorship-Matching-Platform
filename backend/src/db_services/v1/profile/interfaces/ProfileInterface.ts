@@ -6,8 +6,9 @@ export enum ProfileStatus {
 
 
 export interface Profile_GET {
-    _id: string;
+    id: string;
     user_id: number;
+    profile_picture: string;
     bio: string;
     skills: Array<string>;
     interests: Array<string>;
@@ -26,6 +27,7 @@ export interface Profile_FIND {
 export interface Profile_POST {
     user_id: number;
     bio: string;
+    profile_picture: string;
     skills: Array<string>;
     interests: Array<string>;
     status?: ProfileStatus;
@@ -33,6 +35,7 @@ export interface Profile_POST {
 
 export interface Profile_PATCH {
     user_id?: number;
+    profile_picture?: string;
     bio?: string;
     skills?: Array<string>;
     interests?: Array<string>;
@@ -41,6 +44,7 @@ export interface Profile_PATCH {
 
 export interface Profile_QUERY {
     user_id?: any;
+    profile_picture?: any;
     bio?: any;
     skills?: any;
     interests?: any;

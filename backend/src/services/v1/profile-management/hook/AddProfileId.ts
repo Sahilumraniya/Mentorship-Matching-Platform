@@ -1,0 +1,14 @@
+import { HookContext } from "@feathersjs/feathers";
+import { UserDBOperations } from "../../../../db_services/v1/user/utils/UserDBOperations";
+
+export const AddProfileId = () => async (context: HookContext) => {
+    const login_user = context.params.user;
+    // console.log("Data ::", context.data);
+
+    await UserDBOperations.modifyDatum({
+        id: login_user?.id,
+        dbBody: {
+            profile_id: context.result.id
+        }
+    });
+}

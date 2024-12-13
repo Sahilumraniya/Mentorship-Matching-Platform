@@ -1,0 +1,9 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* styles/global.css or your main CSS file */
+.main-content {
+    margin-left: 64px; /* Adjust based on sidebar width */
+    transition: margin-left 0.3s ease;
+}
