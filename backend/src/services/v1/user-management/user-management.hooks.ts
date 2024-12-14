@@ -29,7 +29,7 @@ export default {
   },
 
   error: {
-    all: [],
+    all: [(error: any) => console.log(error)],
     find: [],
     get: [],
     create: [],

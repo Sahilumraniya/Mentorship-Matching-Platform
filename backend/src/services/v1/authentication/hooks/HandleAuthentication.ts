@@ -1,4 +1,5 @@
 import { HookContext } from '@feathersjs/feathers';
+import { ProfileDBOperations } from '../../../../db_services/v1/profile/utils/ProfileDBOperations';
 
 export const HandleAuthentication = () => async (context: HookContext) => {
   const { data, app } = context;
@@ -12,9 +13,13 @@ export const HandleAuthentication = () => async (context: HookContext) => {
         email,
         password
       });
+      const profile = await ProfileDBOperations.getDetails({
+        id: result.user.profile_id,
+        dbQuery: {}
+      })
       context.result = {
         accessToken: result.accessToken,
-        user: result.user
+        user: { ...result.user, profile_picture: profile.profile_picture }
       };
       break;
     default:

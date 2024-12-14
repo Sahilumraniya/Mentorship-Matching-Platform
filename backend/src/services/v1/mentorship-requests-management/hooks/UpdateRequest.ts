@@ -3,6 +3,7 @@ import { UserRole } from "../../../../db_services/v1/user/interfaces/UserInterfa
 import { MentorshipRequestStatus } from "../../../../db_services/v1/mentorship_requests/interfaces/MentorshipRequestInterface";
 import { MentorshipRequestDBOperations } from "../../../../db_services/v1/mentorship_requests/utils/MentorshipRequestDBOperations";
 import { BadRequest } from "@feathersjs/errors";
+import { error } from "console";
 
 export const UpdateRequest = () => async (context: HookContext) => {
     const { id, data } = context;
@@ -20,10 +21,13 @@ export const UpdateRequest = () => async (context: HookContext) => {
             status: { $ne: MentorshipRequestStatus.DELETED }
         }
     }).then((result) => {
+        console.log("Request found", result);
+        console.log("login_user", login_user);
         if (result.receiver_id !== login_user?.id) {
             throw new BadRequest("Only receiver mentor can update the request");
         }
-    }).catch(() => {
+    }).catch((error) => {
+        console.log("Request not found", error);
         throw new BadRequest("Request not found");
     });
 

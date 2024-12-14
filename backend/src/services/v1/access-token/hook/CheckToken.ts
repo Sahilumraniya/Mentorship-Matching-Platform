@@ -24,16 +24,24 @@ export const CheckToken = () => async (context: HookContext) => {
 
     const { exp, sub } = tokenData;
     if (exp && Date.now() <= exp * 1000 && sub) {
-      const user = await UserDBOperations.getDetails({
+      const user: any = await UserDBOperations.getDetails({
         id: sub,
         dbQuery: {
           status: UserStatus.ACTIVE
+        },
+        specifiedQuery: {
+          $eager: 'profile'
         }
       }).catch((e) => {
         console.error('Error ::', e);
         throw new BadRequest('User not found');
       });
 
+      if (user?.profile) {
+        const profile = user.profile;
+        delete user.profile;
+        user.profile_picture = profile.profile_picture;
+      }
       context.result = {
         accessToken,
         user
@@ -41,14 +49,15 @@ export const CheckToken = () => async (context: HookContext) => {
 
     } else {
       if (!sub) throw new BadRequest('Invaild Token');
-      const user = await UserDBOperations.getDataWithoutPagination({
+      const user:any = await UserDBOperations.getDataWithoutPagination({
         dbQuery: {
           status: UserStatus.ACTIVE
         },
         specifiedQuery: {
           $or: [
-            { _id: sub },
-          ]
+            { id: sub },
+          ],
+          $eager: 'profile'
         }
       }).catch((e) => {
         console.error('Error ::', e);
@@ -58,15 +67,20 @@ export const CheckToken = () => async (context: HookContext) => {
       const authenticateService: AuthenticationService = app.service('authentication');
       const expTime = app.get('jwtOptions').expiresIn;
       const payload = {
-        sub: user._id,
+        sub: user.id,
         expiresIn: expTime
       };
       const token = authenticateService.createAccessToken(payload);
-
+      if (user?.profile) {
+        const profile = user.profile;
+        delete user.profile;
+        user.profile_picture = profile.profile_picture;
+      }
       context.result = {
-        accessToken: token,
+        accessToken,
         user
       };
+      
     }
   }
 };

@@ -13,4 +13,10 @@ export const ApiRoutes = {
 
     // mentor request
     mentorRequest: "v1/mentorship-requests-management",
+
+    // notification
+    notification: "v1/notification-managemnt",
+
+    // match user
+    matchUser: "v1/get-match-user",
 }

@@ -16,6 +16,8 @@ export default function AuthLayout({
     console.log("token ::", token);
 
     if (token && token !== "undefined") {
+      router.replace("/dashboard");
+    } else {
       router.replace("/");
     }
   }, []);

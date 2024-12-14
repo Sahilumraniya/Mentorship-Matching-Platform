@@ -30,7 +30,7 @@ const RegistrationForm: React.FC = () => {
                 password
             });
 
-            console.log("userData ::", userData);
+            // console.log("userData ::", userData);
 
             // If user is created successfully, proceed to login
             if (userData) {

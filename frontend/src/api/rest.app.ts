@@ -63,3 +63,5 @@ export const userService = restApp.service(ApiRoutes.user);
 export const profileService = restApp.service(ApiRoutes.profile);
 export const uploadService = restApp.service(ApiRoutes.upload);
 export const mentorRequestService = restApp.service(ApiRoutes.mentorRequest);
+export const notificationService = restApp.service(ApiRoutes.notification);
+export const matchUserService = restApp.service(ApiRoutes.matchUser);

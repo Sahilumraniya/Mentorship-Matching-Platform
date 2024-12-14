@@ -3,7 +3,7 @@
 import { Model, JSONSchema } from 'objection';
 import { Knex } from 'knex';
 import { Application } from '../../../declarations';
-import { User } from '../user/user.class';
+import { User } from '../user/user.model';
 import { NotificationStatus, NotificationType } from './interfaces/NotificationInterface';
 
 class Notification extends Model {

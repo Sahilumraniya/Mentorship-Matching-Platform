@@ -5,7 +5,7 @@ import { useRouter } from 'next/navigation';
 import { useDispatch } from 'react-redux';
 import { AxiosError } from 'axios';
 import { login } from '@/redux/authSlice';
-import restApp, { authCookieName, authenticationService, cookieStorage } from '@/api/rest.app';
+import restApp, { authCookieName, authenticationService, cookieStorage, userService } from '@/api/rest.app';
 import Link from 'next/link';
 
 const LoginForm: React.FC = () => {
@@ -28,7 +28,7 @@ const LoginForm: React.FC = () => {
                 strategy: "local"
             });
 
-            console.log("session ::", session);
+            // console.log("session ::", session);
 
             // If session is created successfully, store session token and update state
             if (session) {
@@ -38,6 +38,7 @@ const LoginForm: React.FC = () => {
 
                 // Dispatch user data to the Redux store
                 const userData = session.user;
+
                 dispatch(login({ userData }));
 
                 // Reset states

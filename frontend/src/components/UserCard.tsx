@@ -30,7 +30,7 @@ const UserCard = ({
         try {
             await mentorRequestService.create({
                 sender_id: loginUser.id,
-                receiver_id: user.user.id
+                receiver_id: user.user.id,
             })
             setLoading(false);
         } catch (error: any) {
@@ -46,11 +46,7 @@ const UserCard = ({
         // Reject request logic here
         try {
             await mentorRequestService.patch(mentorRequestId, {
-                query: {
-                    sender_id: user.user.id,
-                    receiver_id: loginUser.id
-                },
-                status: 2
+                status: 3
             });
             setLoading(false);
         } catch (error: any) {
@@ -65,12 +61,9 @@ const UserCard = ({
         setLoading(true);
         // Accept request logic here
         try {
+            console.log("mentorRequestId ::", mentorRequestId);
             await mentorRequestService.patch(mentorRequestId, {
-                query: {
-                    sender_id: user.user.id,
-                    receiver_id: loginUser.id
-                },
-                status: 1
+                status: 2
             });
             setLoading(false);
         } catch (error: any) {
@@ -83,7 +76,7 @@ const UserCard = ({
 
     return (
         <div className="bg-white shadow-md rounded-lg p-4 mb-4 flex justify-between">
-            {user.profile_picture ? (<div className="flex">
+            {user?.profile_picture ? (<div className="flex">
                 <img
                     src={user.profile_picture}
                     alt={`${user.user.name}'s profile`}

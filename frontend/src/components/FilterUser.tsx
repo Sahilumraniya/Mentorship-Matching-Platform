@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 
 interface FilterProps {
+    hideRoleFilter?: boolean;
     setFilterObject: (filter: FilterObject) => void;
 }
 
@@ -11,7 +12,7 @@ interface FilterObject {
     interests: string[];
 }
 
-const Filter: React.FC<FilterProps> = ({ setFilterObject }) => {
+const Filter: React.FC<FilterProps> = ({ setFilterObject, hideRoleFilter = true }) => {
     const [role, setRole] = useState<'mentor' | 'mentee' | ''>('');
     const [name, setName] = useState<string>('');
     const [skills, setSkills] = useState<string>('');
@@ -83,7 +84,7 @@ const Filter: React.FC<FilterProps> = ({ setFilterObject }) => {
                 />
             </div>
             <div className="flex flex-row justify-between space-x-2">
-                <div className="flex-1">
+                {hideRoleFilter && <div className="flex-1">
                     <label htmlFor="role" className="block">Role:</label>
                     <select
                         id="role"
@@ -96,7 +97,7 @@ const Filter: React.FC<FilterProps> = ({ setFilterObject }) => {
                         <option value="mentor">Mentor</option>
                         <option value="mentee">Mentee</option>
                     </select>
-                </div>
+                </div>}
                 <div className="flex-1">
                     <label htmlFor="skills" className="block">Skills:</label>
                     <input
