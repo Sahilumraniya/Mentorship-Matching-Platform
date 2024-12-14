@@ -1,6 +1,6 @@
 import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faUsers, faBell, faEnvelope, faChartLine } from '@fortawesome/free-solid-svg-icons';
+import { faUsers, faEnvelope } from '@fortawesome/free-solid-svg-icons';
 
 const Dashboard: React.FC = () => {
     // Dummy data for demonstration purposes

@@ -1,7 +1,6 @@
 "use client";
 
-import { matchUserService, profileService } from '@/api/rest.app';
-import Filter from '@/components/FilterUser';
+import { matchUserService } from '@/api/rest.app';
 import UserCard from '@/components/UserCard';
 import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';

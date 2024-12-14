@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 // import Loading from "@/components/Loading"; // Assuming you have a Loading component
 import { useDispatch } from "react-redux";
-import restApp, { accessTokenService, authCookieName, cookieStorage, notificationService, userService } from "@/api/rest.app";
+import restApp, { accessTokenService, authCookieName, cookieStorage, notificationService } from "@/api/rest.app";
 import { login, logout } from "@/redux/authSlice";
 // import Navbar from "../../components/Navbar";
 import Loader from "@/components/Loader";

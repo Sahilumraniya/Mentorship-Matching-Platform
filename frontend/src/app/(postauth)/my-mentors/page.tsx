@@ -1,6 +1,6 @@
 "use client";
 
-import { mentorRequestService, profileService } from '@/api/rest.app';
+import { mentorRequestService } from '@/api/rest.app';
 import Filter from '@/components/FilterUser';
 import UserCard from '@/components/UserCard';
 import { useEffect, useState } from 'react';

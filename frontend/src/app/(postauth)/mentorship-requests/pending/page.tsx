@@ -1,6 +1,6 @@
 "use client";
 
-import { mentorRequestService, profileService } from '@/api/rest.app';
+import { mentorRequestService } from '@/api/rest.app';
 import UserCard from '@/components/UserCard';
 import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
@@ -53,7 +53,8 @@ const App = () => {
                             className="text-sm font-semibold">Fillter</label>
                         <select value={filter} onChange={(e) => {
                             console.log("e.target.value ::", e.target.value);
-                            setFilter(e.target.value)}} className="text-sm font-semibold">
+                            setFilter(e.target.value)
+                        }} className="text-sm font-semibold">
                             <option value={"send"} className="text-sm font-semibold">Send Request</option>
                             <option value={"revice"} className="text-sm font-semibold">Revice Request</option>
                         </select>

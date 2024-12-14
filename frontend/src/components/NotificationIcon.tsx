@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBell } from '@fortawesome/free-solid-svg-icons';
-import restApp, { notificationService } from '@/api/rest.app'; // Adjust the import based on your project structure
+import { notificationService } from '@/api/rest.app'; // Adjust the import based on your project structure
 
 export enum NotificationStatus {
     UNREAD = 0,
