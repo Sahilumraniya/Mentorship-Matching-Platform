@@ -24,6 +24,8 @@ const UserCard = ({
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
 
+    console.log("user ::", user);
+    
     const onSendRequest = async () => {
         setLoading(true);
         // Send request logic here

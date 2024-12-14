@@ -2,8 +2,10 @@
 
 import { profileService, uploadService } from '@/api/rest.app';
 import axios from 'axios';
+import { useRouter } from 'next/navigation';
 import { useState, ChangeEvent, FormEvent } from 'react';
 import { useSelector } from 'react-redux';
+import { toast } from 'react-toastify';
 
 interface ProfileData {
     id: number;
@@ -21,6 +23,7 @@ const ProfileForm: React.FC<{ profileData?: ProfileData, OnClose?: () => void }>
     const [interests, setInterests] = useState<string[]>(profileData?.interests || []);
     const [selectedFile, setSelectedFile] = useState<File | null>(profileData?.profile_picture || null);
     const [loading, setLoading] = useState(false);
+    const router = useRouter();
 
     const handleSkillAdd = (skill: string) => {
         if (skill && !skills.includes(skill)) {
@@ -84,7 +87,8 @@ const ProfileForm: React.FC<{ profileData?: ProfileData, OnClose?: () => void }>
                 await profileService.patch(profileData?.id, updateProfileData).then((res: any) => {
                     console.log("res ::", res);
                 });
-
+                toast.success('Profile updated successfully!');
+                router.replace("/profile");
             } else {
                 const file = selectedFile ? await uploadService.create({ fileNames: selectedFile?.name }) : null;
                 let fileId = null;
@@ -105,7 +109,12 @@ const ProfileForm: React.FC<{ profileData?: ProfileData, OnClose?: () => void }>
                     profile_picture: (file && file.uploadURL != '') ? fileId[0] : null
                 });
             }
+            console.log("profileData ::", profileData);
+            toast.success("Profile updated successfully!", {
+                autoClose: 2000
+            });
             setLoading(false);
+            router.replace("/profile");
         } catch (error) {
             console.log("error ::", error);
 

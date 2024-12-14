@@ -5,6 +5,8 @@ export const AddProfileId = () => async (context: HookContext) => {
     const login_user = context.params.user;
     // console.log("Data ::", context.data);
 
+    console.log("Login User ::", login_user);
+    
     await UserDBOperations.modifyDatum({
         id: login_user?.id,
         dbBody: {

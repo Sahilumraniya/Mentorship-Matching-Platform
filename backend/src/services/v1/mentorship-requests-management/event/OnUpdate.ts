@@ -8,8 +8,8 @@ export const OnUpdate = async (result: MentorshipRequest_GET, context: HookConte
     const { receiver_id, sender_id, status } = result;
 
     if (status === MentorshipRequestStatus.ACCEPTED) {
-        await SendNotifications(NotificationType.MentorshipAccept, sender_id, receiver_id);
+        await SendNotifications(NotificationType.MentorshipAccept, receiver_id, sender_id);
     } else if (status === MentorshipRequestStatus.REJECTED) {
-        await SendNotifications(NotificationType.MentorshipReject, sender_id, receiver_id);
+        await SendNotifications(NotificationType.MentorshipReject, receiver_id, sender_id);
     }
 }

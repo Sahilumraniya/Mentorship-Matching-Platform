@@ -106,6 +106,6 @@ export default function PostAuthLayout({ children }: Readonly<{ children: any }>
         {children}
       </div>
     </div>
-    <ToastContainer />
+    <ToastContainer position="bottom-right" />
   </div>// Render the children (protected content) if authenticated
 }

@@ -13,6 +13,10 @@ export const HandleAuthentication = () => async (context: HookContext) => {
         email,
         password
       });
+      if (!result.user.profile_id) {
+        context.result = { accessToken: result.accessToken, user: result.user };
+        break;
+      }
       const profile = await ProfileDBOperations.getDetails({
         id: result.user.profile_id,
         dbQuery: {}

@@ -7,6 +7,7 @@ import { AxiosError } from 'axios';
 import { login } from '@/redux/authSlice';
 import restApp, { authCookieName, authenticationService, cookieStorage, userService } from '@/api/rest.app';
 import Link from 'next/link';
+import { toast } from 'react-toastify';
 
 const RegistrationForm: React.FC = () => {
     const [name, setName] = useState('');
@@ -57,7 +58,7 @@ const RegistrationForm: React.FC = () => {
                     setEmail("");
                     setPassword("");
                     setLoading(false);
-
+                    toast.success('Registration successful!');
                     router.push('/add-more-information');
                 }
             }
@@ -133,7 +134,7 @@ const RegistrationForm: React.FC = () => {
                         </div>
                     </div>
                     <button type="submit" className="bg-orange-600 text-white px-4 py-2 rounded-lg hover:bg-orange-700 transition duration-300 w-full transform hover:scale-105">
-                        Register
+                        {loading ? 'Registering...' : 'Register'}
                     </button>
                 </form>
 
