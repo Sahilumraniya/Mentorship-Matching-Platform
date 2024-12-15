@@ -25,7 +25,7 @@ const UserCard = ({
     const [error, setError] = useState<string | null>(null);
 
     console.log("user ::", user);
-    
+
     const onSendRequest = async () => {
         setLoading(true);
         // Send request logic here
@@ -35,6 +35,8 @@ const UserCard = ({
                 receiver_id: user.user.id,
             })
             setLoading(false);
+            toast.success('Mentorship request sent successfully');
+            window.location.reload();
         } catch (error: any) {
             console.error(error);
             toast(error.message, { type: 'error' });
@@ -51,6 +53,8 @@ const UserCard = ({
                 status: 3
             });
             setLoading(false);
+            toast.success('Mentorship request rejected successfully');
+            window.location.reload();
         } catch (error: any) {
             console.error(error);
             toast(error.message, { type: 'error' });
@@ -68,6 +72,8 @@ const UserCard = ({
                 status: 2
             });
             setLoading(false);
+            toast.success('Mentorship request accepted successfully');
+            window.location.reload();
         } catch (error: any) {
             console.error(error);
             toast(error.message, { type: 'error' });
@@ -78,12 +84,17 @@ const UserCard = ({
 
     return (
         <div className="bg-white shadow-md rounded-lg p-4 mb-4 flex justify-between">
-            {user?.profile_picture ? (<div className="flex">
-                <img
+            {Object.hasOwn(user, "profile_picture") ? (<div className="flex">
+                {user.profile_picture != null ? <img
                     src={user.profile_picture}
                     alt={`${user.user.name}'s profile`}
                     className="w-16 h-16 rounded-full mr-4"
                 />
+                    :
+                    <div className="w-16 h-16 flex items-center justify-center bg-gray-500 text-white rounded-full mr-4">
+                        {user.user.name[0]}
+                    </div>
+                }
                 <div className="flex-1">
                     <h3 className="text-lg font-bold">{user.user.name}</h3>
                     <p className="text-sm text-gray-600">{user.bio}</p>

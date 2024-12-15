@@ -16,8 +16,8 @@ const Sidebar: React.FC = () => {
     const [isMentorshipSubmenuOpen, setMentorshipSubmenuOpen] = useState(false);
 
     const handleLogout = () => {
-        localStorage.removeItem(authCookieName);
-        cookieStorage.removeItem(authCookieName);
+        localStorage.clear();
+        cookieStorage.clear();
         dispatch(logout());
         router.push('/login');
     };

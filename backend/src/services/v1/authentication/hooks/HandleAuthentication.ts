@@ -20,7 +20,7 @@ export const HandleAuthentication = () => async (context: HookContext) => {
       const profile = await ProfileDBOperations.getDetails({
         id: result.user.profile_id,
         dbQuery: {}
-      })
+      });
       context.result = {
         accessToken: result.accessToken,
         user: { ...result.user, profile_picture: profile.profile_picture }
@@ -29,4 +29,6 @@ export const HandleAuthentication = () => async (context: HookContext) => {
     default:
       break;
   }
+
+  return context;
 };

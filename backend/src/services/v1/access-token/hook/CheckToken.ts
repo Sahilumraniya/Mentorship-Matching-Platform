@@ -49,7 +49,7 @@ export const CheckToken = () => async (context: HookContext) => {
 
     } else {
       if (!sub) throw new BadRequest('Invaild Token');
-      const user:any = await UserDBOperations.getDataWithoutPagination({
+      const user: any = await UserDBOperations.getDataWithoutPagination({
         dbQuery: {
           status: UserStatus.ACTIVE
         },
@@ -80,7 +80,7 @@ export const CheckToken = () => async (context: HookContext) => {
         accessToken,
         user
       };
-      
+      return context;
     }
   }
 };

@@ -4,7 +4,8 @@ import { UserDBOperations } from "../../../../db_services/v1/user/utils/UserDBOp
 export const AddProfileId = () => async (context: HookContext) => {
     const login_user = context.params.user;
     // console.log("Data ::", context.data);
-
+    console.log("Context ::", context.result);
+    
     console.log("Login User ::", login_user);
     
     await UserDBOperations.modifyDatum({

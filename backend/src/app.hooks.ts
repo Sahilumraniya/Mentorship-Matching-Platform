@@ -1,11 +1,15 @@
 // Application hooks that run for every service
 // Don't remove this comment. It's needed to format import lines nicely.
 
+import { HookContext } from "@feathersjs/feathers";
 import { iff, isProvider } from "feathers-hooks-common";
 
 export default {
   before: {
-    all: [],
+    all: [(ctx: HookContext) => {
+      console.log("Hook Context User 1::", ctx.params.user);
+      console.log("Hook Context  is ::", ctx.params.authenticated);
+    }],
     find: [iff(isProvider('external'), (ctx) => {
       const { params } = ctx;
       const { query } = params;

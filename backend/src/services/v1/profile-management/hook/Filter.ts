@@ -5,7 +5,7 @@ export const Filter = () => async (context: HookContext) => {
     const login_user = context.params.user;
     const { query } = params;
 
-    console.log("Query ::", query);
+    // console.log("Query ::", query);
 
     if (query?.filter != 'true') {
         return context;

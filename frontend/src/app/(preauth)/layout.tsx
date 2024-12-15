@@ -4,6 +4,7 @@
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import Loader from "@/components/Loader";
+import { ToastContainer } from "react-toastify";
 
 export default function AuthLayout({
   children,
@@ -22,5 +23,7 @@ export default function AuthLayout({
     }
   }, []);
 
-  return (<> {loader ? <Loader /> : children}</>);
+  return (<> {loader ? <Loader /> : <>{children}
+    <ToastContainer position="bottom-right" />
+  </>}</>);
 }

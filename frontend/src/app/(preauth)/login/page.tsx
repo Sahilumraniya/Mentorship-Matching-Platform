@@ -7,6 +7,7 @@ import { AxiosError } from 'axios';
 import { login } from '@/redux/authSlice';
 import restApp, { authCookieName, authenticationService, cookieStorage, userService } from '@/api/rest.app';
 import Link from 'next/link';
+import { toast } from 'react-toastify';
 
 const LoginForm: React.FC = () => {
     const [email, setEmail] = useState('');
@@ -45,10 +46,11 @@ const LoginForm: React.FC = () => {
                 setEmail("");
                 setPassword("");
                 setLoading(false);
-
+                toast.success('Logged in successfully');
                 router.push('/dashboard'); // Redirect to the dashboard or another page
             }
         } catch (error: any) {
+            toast.error(error.message);
             setError(error.message);
             setLoading(false);
         }
