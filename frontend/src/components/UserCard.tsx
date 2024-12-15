@@ -36,7 +36,6 @@ const UserCard = ({
             })
             setLoading(false);
             toast.success('Mentorship request sent successfully');
-            window.location.reload();
         } catch (error: any) {
             console.error(error);
             toast(error.message, { type: 'error' });
@@ -54,7 +53,6 @@ const UserCard = ({
             });
             setLoading(false);
             toast.success('Mentorship request rejected successfully');
-            window.location.reload();
         } catch (error: any) {
             console.error(error);
             toast(error.message, { type: 'error' });
@@ -73,7 +71,6 @@ const UserCard = ({
             });
             setLoading(false);
             toast.success('Mentorship request accepted successfully');
-            window.location.reload();
         } catch (error: any) {
             console.error(error);
             toast(error.message, { type: 'error' });

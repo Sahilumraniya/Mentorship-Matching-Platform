@@ -20,6 +20,7 @@ Here’s the list of tables and their purpose:
 | email  | VARCHAR(255) | UNIQUE, NOT NULL |
 | password | VARCHAR(255) | NOT NULL |
 | role   | ENUM('mentor', 'mentee') | NOT NULL |
+| profile | INT      | FOREIGN KEY (profiles.id) |
 | created_at | TIMESTAMP | DEFAULT CURRENT_TIMESTAMP |
 | updated_at | TIMESTAMP | DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP |
 
@@ -30,7 +31,6 @@ Here’s the list of tables and their purpose:
 | Column | Data Type | Constraints |
 |:-------|:----------|:------------|
 | id     | INT       | PRIMARY KEY, AUTO_INCREMENT |
-| user_id | INT       | FOREIGN KEY (users.id) |
 | bio    | TEXT      | NULLABLE |
 | skills | JSON      | NULLABLE |
 | interests | JSON    | NULLABLE |
@@ -58,23 +58,11 @@ Here’s the list of tables and their purpose:
 | Column | Data Type | Constraints |
 |:-------|:----------|:------------|
 | id     | INT       | PRIMARY KEY, AUTO_INCREMENT |
-| user_id | INT      | FOREIGN KEY (users.id) |
-| message | VARCHAR(500) | NOT NULL |
+| sender_id | INT     | FOREIGN KEY (users.id) |
+| receiver_id | INT   | FOREIGN KEY (users.id) |
+| content | VARCHAR(500) | NOT NULL |
 | is_read | BOOLEAN  | DEFAULT FALSE |
 | created_at | TIMESTAMP | DEFAULT CURRENT_TIMESTAMP |
-
-### 5. matches Table
-
-**Purpose:** Store the results of the matching algorithm for potential mentors/mentees.
-
-| Column | Data Type | Constraints |
-|:-------|:----------|:------------|
-| id     | INT       | PRIMARY KEY, AUTO_INCREMENT |
-| mentor_id | INT     | FOREIGN KEY (users.id) |
-| mentee_id | INT    | FOREIGN KEY (users.id) |
-| match_score | FLOAT  | NULLABLE |
-| created_at | TIMESTAMP | DEFAULT CURRENT_TIMESTAMP |
-
 
 ## Getting Started
 
