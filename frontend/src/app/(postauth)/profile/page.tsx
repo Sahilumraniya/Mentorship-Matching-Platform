@@ -74,7 +74,7 @@ const ProfilePage: React.FC = () => {
                         )}
                     </div>
                     <h2 className="text-xl font-semibold text-center text-gray-800">{user?.name}</h2>
-                    <p className="text-sm text-center text-gray-500">{profileData?.role || "User"}</p>
+                    <p className="text-sm text-center text-gray-500">{user?.role || "User"}</p>
                     <button
                         onClick={handleEditClick}
                         className="w-full bg-blue-600 text-white py-2 px-4 mt-6 rounded-lg hover:bg-blue-700 transition"

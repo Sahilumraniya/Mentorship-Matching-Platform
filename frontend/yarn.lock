@@ -965,6 +965,11 @@ cookie-storage@^6.1.0:
   resolved "https://registry.npmjs.org/cookie-storage/-/cookie-storage-6.1.0.tgz#291b2f662d961be44f999626593421cbfcf23790"
   integrity sha512-HeVqbVy8BjXhAAuFtL6MTG+witHoLbxfky2jgVh9FmxmyL6IKa9gSSyPNjevXCCCxPu6Tzd9J8+eXTRQzYU/cg==
 
+countup.js@^2.8.0:
+  version "2.8.0"
+  resolved "https://registry.npmjs.org/countup.js/-/countup.js-2.8.0.tgz#64951f2df3ede28839413d654d8fef28251c32a8"
+  integrity sha512-f7xEhX0awl4NOElHulrl4XRfKoNH3rB+qfNSZZyjSZhaAoUk6elvhH+MNxMmlmuUJ2/QNTWPSA7U4mNtIAKljQ==
+
 cross-spawn@^7.0.0, cross-spawn@^7.0.6:
   version "7.0.6"
   resolved "https://registry.npmjs.org/cross-spawn/-/cross-spawn-7.0.6.tgz#8a58fe78f00dcd70c370451759dfbfaf03e8ee9f"
@@ -2547,6 +2552,13 @@ radix-router@^3.0.1:
   version "3.0.1"
   resolved "https://registry.npmjs.org/radix-router/-/radix-router-3.0.1.tgz#5522c829f7100e60c58fd1acf8803e0b2b312d97"
   integrity sha512-jpHXHgP+ZmVzEfmZ7WVRSvc/EqMoAqYuMtBsHd9s47Hs9Iy8FDJhkweMrDH0wmdxanLzVIWhq0UpomLXNpW8tg==
+
+react-countup@^6.5.3:
+  version "6.5.3"
+  resolved "https://registry.npmjs.org/react-countup/-/react-countup-6.5.3.tgz#e892aa3eab2d6ba9c3cdba30bf4ed6764826d848"
+  integrity sha512-udnqVQitxC7QWADSPDOxVWULkLvKUWrDapn5i53HE4DPRVgs+Y5rr4bo25qEl8jSh+0l2cToJgGMx+clxPM3+w==
+  dependencies:
+    countup.js "^2.8.0"
 
 react-dom@^19.0.0:
   version "19.0.0"

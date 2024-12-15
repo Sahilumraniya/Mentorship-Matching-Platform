@@ -18,7 +18,7 @@ export default function PostAuthLayout({ children }: Readonly<{ children: any }>
   const [loading, setLoading] = useState(true);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   let userId: number | null = null;
-  const [notifications, setNotifications] = useState([]); // State for notifications
+  const [notifications, setNotifications] = useState<any>([]); // State for notifications
   const router = useRouter();
   const dispatch = useDispatch();
 
@@ -96,11 +96,11 @@ export default function PostAuthLayout({ children }: Readonly<{ children: any }>
 
     <div className="flex-1 overflow-hidden">
       {/* Mobile Navbar */}
-      <MobileNavbar />
+      <MobileNavbar notifications={notifications}/>
 
       {/* Main Content */}
       <div className="p-4 flex-1 max-h-screen overflow-y-auto">
-        <div className="rlative flex items-end justify-end p-4 bg-white shadow-md">
+        <div className="hidden absolute md:flex items-end justify-end p-4 shadow-md md:right-12 md:top-4 z-50">
           <NotificationIcon notifications={notifications} />
         </div>
         {children}

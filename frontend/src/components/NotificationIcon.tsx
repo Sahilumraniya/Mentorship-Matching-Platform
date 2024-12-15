@@ -13,7 +13,7 @@ const NotificationType = {
     "1": "Mentorship Request",
     "2": "Mentorship Accept",
     "3": "Mentorship Reject",
-    "4": "OTHER"
+    "4": "Other"
 }
 
 interface Notification {
@@ -26,39 +26,59 @@ interface Notification {
 
 const NotificationIcon: React.FC<{ notifications: Array<Notification> }> = ({ notifications }) => {
     const [isOpen, setIsOpen] = useState(false);
+    const [loading, setLoading] = useState(false);
 
     const toggleDropdown = async () => {
         if (!isOpen) {
-            // If the dropdown is being opened, update notifications to READ
             await markNotificationsAsRead();
         }
         setIsOpen(!isOpen);
     };
 
     const markNotificationsAsRead = async () => {
+        if (notifications.length === 0) return;
+
+        setLoading(true);
         try {
-            // Assuming you have an endpoint to mark notifications as read
-            notifications.forEach(async notification => {
-                await notificationService.patch(notification.id, { type: NotificationStatus.READ });
-            });
-            // Optionally, you can update the local state to reflect the changes
-            // For example, you can map through notifications and set the status to READ
+            await Promise.all(notifications.map(notification =>
+                notificationService.patch(notification.id, { status: NotificationStatus.READ })
+            ));
         } catch (error) {
             console.error("Failed to mark notifications as read:", error);
+        } finally {
+            setLoading(false);
         }
     };
 
     return (
         <div className="relative">
-            <button onClick={toggleDropdown} className="p-2">
-                <FontAwesomeIcon icon={faBell} className="text-xl" />
+            <button
+                onClick={toggleDropdown}
+                className="p-1 md:p-2 relative focus:outline-none"
+                aria-haspopup="true"
+                aria-expanded={isOpen}
+            >
+                <FontAwesomeIcon
+                    icon={faBell}
+                    className={`${notifications.length > 0 ? 'text-red-600' : 'text-gray-600'} text-xl`}
+                />
+                {notifications.length > 0 && (
+                    <span className="absolute top-0 right-0 bg-red-600 text-white text-xs rounded-full px-1">
+                        {notifications.length}
+                    </span>
+                )}
             </button>
             {isOpen && (
                 <div className="absolute right-0 mt-2 w-64 bg-white border rounded shadow-lg z-10">
                     <ul className="max-h-60 overflow-y-auto">
-                        {notifications.length > 0 ? (
+                        {loading ? (
+                            <li className="p-2 text-center">Loading...</li>
+                        ) : notifications.length > 0 ? (
                             notifications.map(notification => (
-                                <li key={notification.id} className={`p-2 border-b ${notification?.status === NotificationStatus.UNREAD ? 'bg-gray-100' : ''}`}>
+                                <li
+                                    key={notification.id}
+                                    className={`p-2 border-b ${notification.status === NotificationStatus.UNREAD ? 'bg-gray-100' : ''}`}
+                                >
                                     <span className="font-semibold">You have a notification from {notification.sender.name} for </span>
                                     <span className="font-semibold">{NotificationType[notification.type]}</span>
                                     <span className="text-gray-500 text-sm block">{new Date(notification.createdAt).toLocaleString()}</span>

@@ -1,13 +1,17 @@
+"use client";
+
 import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faUsers, faEnvelope } from '@fortawesome/free-solid-svg-icons';
+import { faUsers, faEnvelope, faChalkboardTeacher, faUserGraduate, faBell } from '@fortawesome/free-solid-svg-icons';
+import CountUp from 'react-countup';
 
 const Dashboard: React.FC = () => {
     // Dummy data for demonstration purposes
     const userStats = {
-        totalUsers: 1200, // Total number of users
-        activeUsers: 300, // Number of active users
-        mentorshipRequests: 15, // Number of mentorship requests
+        totalUsers: { value: 1200, icon: faUsers, label: 'Total Users' },
+        mentorshipRequests: { value: 15, icon: faEnvelope, label: 'Mentorship Requests' },
+        mentors: { value: 5, icon: faChalkboardTeacher, label: 'Mentors' },
+        mentees: { value: 10, icon: faUserGraduate, label: 'Mentees' },
     };
 
     const recentActivities = [
@@ -16,51 +20,74 @@ const Dashboard: React.FC = () => {
         { id: 3, message: 'You have a new message from Alex.', time: '30 minutes ago' },
     ];
 
+    const notifications = [
+        'You have 3 new notifications.',
+        'Your mentorship request was accepted.',
+        'New message from a mentor.',
+    ];
+
     return (
-        <div className="p-4">
-            <h1 className="text-2xl font-bold mb-4">Dashboard</h1>
-            <p className="text-gray-600 mb-4">* This is dummy data for demonstration purposes only.</p>
+        <div className="flex flex-col items-center justify-start h-screen bg-gray-100">
+            <div className="w-full max-w-6xl p-6">
+                <h1 className="text-3xl font-bold mb-4 text-gray-800 ">Dashboard</h1>
+                <p>* This data is dummy</p>
+                <p className="text-gray-600 mb-4 text-center">
+                    Welcome to the Mentorship Platform! Here you can track your mentorship activities, manage requests, and connect with mentors and mentees.
+                </p>
 
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
-                {/* User Statistics Cards */}
-                <div className="bg-white p-4 rounded shadow">
-                    <h2 className="text-lg font-semibold">Total Users</h2>
-                    <p className="text-2xl">{userStats.totalUsers}</p>
-                    <FontAwesomeIcon icon={faUsers} className="text-blue-500 text-3xl" />
-                </div>
-                <div className="bg-white p-4 rounded shadow">
-                    <h2 className="text-lg font-semibold">Active Users</h2>
-                    <p className="text-2xl">{userStats.activeUsers}</p>
-                    <FontAwesomeIcon icon={faUsers} className="text-green-500 text-3xl" />
-                </div>
-                <div className="bg-white p-4 rounded shadow">
-                    <h2 className="text-lg font-semibold">Mentorship Requests</h2>
-                    <p className="text-2xl">{userStats.mentorshipRequests}</p>
-                    <FontAwesomeIcon icon={faEnvelope} className="text-orange-500 text-3xl" />
-                </div>
-            </div>
-
-            {/* Recent Activities */}
-            <div className="bg-white p-4 rounded shadow mb-6">
-                <h2 className="text-lg font-semibold mb-2">Recent Activities</h2>
-                <ul>
-                    {recentActivities.map(activity => (
-                        <li key={activity.id} className="border-b py-2">
-                            <span>{activity.message}</span>
-                            <span className="text-gray-500 text-sm ml-2">{activity.time}</span>
-                        </li>
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-6">
+                    {/* User Statistics Cards */}
+                    {Object.entries(userStats).map(([key, { value, icon, label }]) => (
+                        <div
+                            key={key}
+                            className="bg-white p-6 rounded-lg shadow-lg flex items-center transition-transform transform hover:scale-105 duration-300 ease-in-out"
+                            title={label} // Tooltip for additional context
+                        >
+                            <FontAwesomeIcon
+                                icon={icon}
+                                className="text-blue-500 text-4xl mr-4"
+                            />
+                            <div>
+                                <h2 className="text-lg font-semibold">{label}</h2>
+                                <CountUp start={0} end={value} duration={1} className='text-3xl font-bold text-gray-800' />
+                            </div>
+                        </div>
                     ))}
-                </ul>
-            </div>
+                </div>
 
-            {/* Notifications */}
-            <div className="bg-white p-4 rounded shadow">
-                <h2 className="text-lg font-semibold mb-2">Notifications</h2>
-                <ul>
-                    <li className="border-b py-2">You have 3 new notifications.</li>
-                    <li className="border-b py-2">Your mentorship request was accepted.</li>
-                    <li className="border-b py-2">New message from a mentor.</li>
-                </ul>
+                {/* Recent Activities */}
+                <div className="bg-white p-6 rounded-lg shadow-lg mb-6">
+                    <h2 className="text-lg font-semibold mb-4">Recent Activities</h2>
+                    <ul>
+                        {recentActivities.map(activity => (
+                            <li
+                                key={activity.id}
+                                className="border-b py-3 flex justify-between transition-colors duration-300 hover:bg-gray-100"
+                            >
+                                <span className="text-gray-700">{activity.message}</span>
+                                <span className="text-gray-500 text-sm">{activity.time}</span>
+                            </li>
+                        ))}
+                    </ul>
+                </div>
+
+                {/* Notifications */}
+                <div className="bg-white p-6 rounded-lg shadow-lg">
+                    <h2 className="text-lg font-semibold mb-4 flex items-center">
+                        <FontAwesomeIcon icon={faBell} className="text-yellow-500 mr-2" />
+                        Notifications
+                    </h2>
+                    <ul>
+                        {notifications.map((notification, index) => (
+                            <li
+                                key={index}
+                                className="border-b py-3 transition-colors duration-300 hover:bg-gray-100"
+                            >
+                                {notification}
+                            </li>
+                        ))}
+                    </ul>
+                </div>
             </div>
         </div>
     );

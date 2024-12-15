@@ -80,64 +80,46 @@ const UserCard = ({
     };
 
     return (
-        <div className="bg-white shadow-md rounded-lg p-4 mb-4 flex justify-between">
-            {Object.hasOwn(user, "profile_picture") ? (<div className="flex">
-                {user.profile_picture != null ? <img
-                    src={user.profile_picture}
-                    alt={`${user.user.name}'s profile`}
-                    className="w-16 h-16 rounded-full mr-4"
-                />
-                    :
-                    <div className="w-16 h-16 flex items-center justify-center bg-gray-500 text-white rounded-full mr-4">
+        <div className="bg-white shadow-lg rounded-lg p-6 mb-6 flex flex-col md:flex-row">
+            <div className="flex flex-col items-center md:items-start md:flex-row mb-4 md:mb-0">
+                {user.profile_picture ? (
+                    <img
+                        src={user.profile_picture}
+                        alt={`${user.user.name}'s profile`}
+                        className="w-20 h-20 rounded-full mb-4 md:mb-0 md:mr-4"
+                    />
+                ) : (
+                    <div className="w-20 h-20 flex items-center justify-center bg-gray-300 text-white rounded-full mb-4 md:mb-0 md:mr-4">
                         {user.user.name[0]}
                     </div>
-                }
-                <div className="flex-1">
-                    <h3 className="text-lg font-bold">{user.user.name}</h3>
+                )}
+                <div className="flex-1 text-center md:text-left">
+                    <h3 className="text-xl font-semibold text-gray-800">{user.user.name}</h3>
                     <p className="text-sm text-gray-600">{user.bio}</p>
                     <div className="mt-2">
-                        <strong>Skills:</strong>
-                        <p>{user.skills.join(', ')}</p>
+                        <strong className="text-gray-700">Skills:</strong>
+                        <p className="text-gray-600">{user.skills.join(', ')}</p>
                     </div>
                     <div className="mt-1">
-                        <strong>Interests:</strong>
-                        <p>{user.interests.join(', ')}</p>
+                        <strong className="text-gray-700">Interests:</strong>
+                        <p className="text-gray-600">{user.interests.join(', ')}</p>
                     </div>
                 </div>
-            </div>) : <div className="flex">
-                <img
-                    src={user.profile.profile_picture}
-                    alt={`${user.name}'s profile`}
-                    className="w-16 h-16 rounded-full mr-4"
-                />
-                <div className="flex-1">
-                    <h3 className="text-lg font-bold">{user.name}</h3>
-                    <p className="text-sm text-gray-600">{user.profile.bio}</p>
-                    <div className="mt-2">
-                        <strong>Skills:</strong>
-                        <p>{user.profile.skills.join(', ')}</p>
-                    </div>
-                    <div className="mt-1">
-                        <strong>Interests:</strong>
-                        <p>{user.profile.interests.join(', ')}</p>
-                    </div>
-                </div>
-            </div>}
-            <div className="flex flex-col justify-center">
+            </div>
+            <div className="flex flex-col justify-center mt-4 md:mt-0">
                 {showSendRequestButton && (
                     <button
                         onClick={onSendRequest}
-                        className="bg-blue-500 text-white rounded px-4 py-2 flex items-center mb-2"
+                        className="bg-blue-600 text-white rounded-lg px-4 py-2 flex items-center mb-2 transition duration-200 hover:bg-blue-700"
                     >
                         <FontAwesomeIcon icon={faPaperPlane} className="mr-2" />
                         {loading ? 'Sending...' : 'Send Request'}
                     </button>
-                )
-                }
+                )}
                 {showRejectButton && (
                     <button
                         onClick={onReject}
-                        className="bg-red-500 text-white rounded px-4 py-2 flex items-center mb-2"
+                        className="bg-red-600 text-white rounded-lg px-4 py-2 flex items-center mb-2 transition duration-200 hover:bg-red-700"
                     >
                         <FontAwesomeIcon icon={faTimes} className="mr-2" />
                         Reject
@@ -146,7 +128,7 @@ const UserCard = ({
                 {showAcceptButton && (
                     <button
                         onClick={onAccept}
-                        className="bg-green-500 text-white rounded px-4 py-2 flex items-center"
+                        className="bg-green-600 text-white rounded-lg px-4 py-2 flex items-center transition duration-200 hover:bg-green-700"
                     >
                         <FontAwesomeIcon icon={faCheck} className="mr-2" />
                         Accept
