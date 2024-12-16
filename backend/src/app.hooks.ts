@@ -6,10 +6,7 @@ import { iff, isProvider } from "feathers-hooks-common";
 
 export default {
   before: {
-    all: [(ctx: HookContext) => {
-      console.log("Hook Context User 1::", ctx.params.user);
-      console.log("Hook Context  is ::", ctx.params.authenticated);
-    }],
+    all: [],
     find: [iff(isProvider('external'), (ctx) => {
       const { params } = ctx;
       const { query } = params;

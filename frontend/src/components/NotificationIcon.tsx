@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBell } from '@fortawesome/free-solid-svg-icons';
 import { notificationService } from '@/api/rest.app'; // Adjust the import based on your project structure
@@ -27,8 +27,10 @@ interface Notification {
 const NotificationIcon: React.FC<{ notifications: Array<Notification> }> = ({ notifications }) => {
     const [isOpen, setIsOpen] = useState(false);
     const [loading, setLoading] = useState(false);
+    const opened = useRef(false);
 
     const toggleDropdown = async () => {
+        opened.current = true;
         if (!isOpen) {
             await markNotificationsAsRead();
         }
@@ -60,9 +62,9 @@ const NotificationIcon: React.FC<{ notifications: Array<Notification> }> = ({ no
             >
                 <FontAwesomeIcon
                     icon={faBell}
-                    className={`${notifications.length > 0 ? 'text-red-600' : 'text-gray-600'} text-xl`}
+                    className={`${(notifications.length > 0 && !opened.current) ? 'text-red-600' : 'text-gray-600'} text-xl`}
                 />
-                {notifications.length > 0 && (
+                {(notifications.length > 0 && !opened.current) && (
                     <span className="absolute top-0 right-0 bg-red-600 text-white text-xs rounded-full px-1">
                         {notifications.length}
                     </span>

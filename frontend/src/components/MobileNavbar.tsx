@@ -29,7 +29,7 @@ const MobileNavbar: React.FC<{ notifications: any }> = ({ notifications }) => {
                     <FontAwesomeIcon icon={isMenuOpen ? faTimes : faBars} />
                 </button>
                 <div className='flex items-center gap-4'>
-                    <h2 className="text-white font-semibold">{user.name}</h2>
+                    <h2 className="text-white font-semibold">{user?.name}</h2>
                     {user && user.profile_picture ?
                         <img src={user.profile_picture} alt="Profile" className="w-10 h-10 rounded-full mr-3" />
                         : <div className="w-10 h-10 flex items-center justify-center bg-gray-500 text-white rounded-full mr-3">

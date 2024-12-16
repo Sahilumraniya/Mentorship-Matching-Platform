@@ -62,9 +62,9 @@ const App = () => {
                 <div>
                     {users.length > 0 ? (
                         users.map((user: any, index: number) => {
-                            console.log("user ::", user.receiver);
+                            console.log("user ::", user.sender);
                             return (
-                                <UserCard key={index} user={user.sender ? user.sender : user.receiver} mentorRequestId={user.id} />
+                                <UserCard key={index} user={user?.sender ? user.sender : user.receiver} mentorRequestId={user.id} />
                             )
                         })
                     ) : (
