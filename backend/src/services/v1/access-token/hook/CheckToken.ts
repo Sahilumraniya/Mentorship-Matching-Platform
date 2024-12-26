@@ -65,7 +65,7 @@ export const CheckToken = () => async (context: HookContext) => {
       }).then((res) => res[0]);
 
       const authenticateService: AuthenticationService = app.service('authentication');
-      const expTime = app.get('jwtOptions').expiresIn;
+      const expTime = await app.get('jwtOptions').expiresIn;
       const payload = {
         sub: user.id,
         expiresIn: expTime
